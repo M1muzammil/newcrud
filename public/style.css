@@ -1,0 +1,112 @@
+p>i{
+    font-size: 2em;
+    }
+    h1>i{
+        color: blue;
+    }
+    h1{
+        font-style: italic;
+    }
+    h1>p{
+        font-size: 0.3em;
+        color:yellow;
+    }
+    input{
+        background-color: black;
+        border: 2px solid white;
+        border-radius: 15px;
+        color: white;
+        padding-left: 1em;
+    }
+    input::placeholder{
+        color: white;
+        padding: 1em;
+    }
+    textarea{
+        background-color: black;
+        color: white;
+        padding: 0.5em;
+        border: 2px solid white;
+        border-radius: 15px;
+    }
+    textarea::placeholder{
+    color: white;
+    }
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+    }
+    #image{
+    
+    width: 12em;
+    
+    }
+    .bi-card-text{
+    
+        
+    }
+    .result{
+        width: 70%;
+        height: 100vh;
+     background-color: rgb(104, 104, 151);
+     order: 2px dotted white;
+        padding: 2em;
+        margin: 1em;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 1em;
+    }
+    .mainobject{
+        width: 30%;
+       background: url(./backgroundform.jpg);
+    color: #fff;
+    height: 100;
+    padding: 1em;
+    }
+    
+    .imageelement{
+    
+        border-radius: 50%;
+        margin-right: 2em;
+        margin-bottom:2em ;
+    }
+    
+    
+    .maindiv{
+        background-color: rgb(154, 158, 204);
+       width: 18em;
+       border: 2px solid blue;
+       border-radius: 10px;
+       padding: 1em;
+    }
+    .user{
+       
+        margin-right: 1em;
+        margin-top: 0.3em;
+        font-size: 1.5em;
+       
+    
+    }
+    .bio{
+        background-color: lightblue;
+        padding: 0.5em;
+        font-weight: 900;
+        border: 2px solid blue;
+        border-radius: 15px;
+       overflow-wrap: break-word;
+    }
+    
+    .row1{
+        display: flex;
+       
+    
+    }
+    
+    .imgdiv{
+    
+        
+    }
