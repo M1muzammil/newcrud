@@ -41,11 +41,10 @@
             <p>
                 <i class="bi bi-joystick"></i></i> <input type="text" placeholder="HOBBY" id="hobby">
             </p>
-            <p>
-                IMAGE <input type="file"  name="image" id="img">
-            </p>
+           
     
-<button type="submit" class="btn btn-dark" onclick="submitprofile()">DONE</button>
+            <button type="submit" class="btn btn-dark" onclick="submitProfile()">DONE</button>
+
 
        
     </div>
@@ -54,7 +53,27 @@
 
 
 
+
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- sweet alert buttons and others styling -->
+<style>
+    
+    .main{ width: 100%;
+       background: url(./backgroundform.jpg);
+    color: #fff;
+  
+   height: 100%;
+    padding: 1em;
+
+    }
+    .swal2-input {
+        background-color: black;
+       
+    }
+    
+   
+</style>
 <script src="./main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>

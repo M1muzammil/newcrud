@@ -1,149 +1,96 @@
 import express from 'express';
 import { nanoid } from 'nanoid';
+import { client } from '../../mongodb.mjs';
+
+const db = client.db("user");
+const col =db.collection("profile");
+
 let router = express.Router();
 
-console.log(nanoid)
+router.post('/profile', async (req, res, next) => {
+    const { username, bio, phone, passion, hobby } = req.body;
 
-let profiles =[
-
-
-
-]
-
-router.post('/profile', (req, res, next) => {
-    const { username, bio, phone, passion, hobby, img } = req.body;
-  
-    if (!username || !bio || !phone || !passion || !hobby || !img) {
-      res.status(400).send('Required parameter is missing. Please fill all input fields properly.');
-      return;
+    if (!username || !bio || !phone || !passion || !hobby) {
+        res.status(400).send('Required parameter is missing. Please fill all input fields properly.');
+        return;
     }
-  
-    profiles.push({
-      id: nanoid(),
-      username,
-      bio,
-      phone,
-      passion,
-      hobby,
-      img,
-    });
-  
+
+    const newProfile = {
+        id: nanoid(),
+        username,
+        bio,
+        phone,
+        passion,
+        hobby,
+    };
+
+    await col.insertOne(newProfile);
     res.send('Profile created successfully.');
-  });
-  
-//   sare post all post
+});
 
-router.get('/profile/:profileId', (req, res, next) => {
-   
+router.get('/profiles', async (req, res, next) => {
+    try {
+        const cursor = col.find({}).sort({ timestamp: -1 });
+        let results = await cursor.toArray();
 
-    for (let i = 0; i < profiles.length; i++) {
-        if (profiles[i].id === Number(req.params.profileId)) {
-            res.send(profiles[i]);
-            return;
-        }
+        console.log(results);
+        res.send(results);
+    } catch (error) {
+        console.error(error);
     }
-    res.send('profile not found with id ' + req.params.profileId);
-})
+});
 
-
-router.get('/profiles', (req, res, next) => {
-    res.send(profiles);
-})
-router.get('/profile/:profileId', (req, res, next) =>{
-    res.send(profiles);
-    })
-
-// deletd 
-router.delete('/profile/:profileId', (req, res, next) => {
-    
-
+router.get('/profile/:profileId', async (req, res, next) => {
     const profileId = req.params.profileId;
-    const profileIndex = profiles.findIndex(profile=> profile.id === profileId);
 
-    if (profileIndex !== -1) {
-        profiles.splice(profileIndex, 1);
-        res.send('profile deleted');
-    } else {
-        res.status(404).send('profile not found');
+    try {
+        const profile = await col.findOne({ id: profileId });
+
+        if (profile) {
+            res.send(profile);
+        } else {
+            res.status(404).send('Profile not found with id ' + profileId);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.delete('/profile/:profileId', async (req, res, next) => {
+    const profileId = req.params.profileId;
+
+    try {
+        const deleteResponse = await col.deleteOne({ id: profileId });
+        if (deleteResponse.deletedCount === 1) {
+            res.send(`Profile with id ${profileId} deleted successfully.`);
+        } else {
+            res.send('Profile not found with the given id.');
+        }
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+router.put('/profile/:profileId', async (req, res, next) => {
+    const profileId = req.params.profileId;
+    const { username, bio, phone, passion, hobby } = req.body;
+
+    if (!username || !bio || !phone || !passion || !hobby) {
+        res.status(403).send('Required parameters missing. Please provide all profile details.');
+        return;
+    }
+
+    try {
+        const updateResponse = await col.updateOne({ id: profileId }, { $set: { username, bio, phone, passion, hobby } });
+
+        if (updateResponse.matchedCount === 1) {
+            res.send(`Profile with id ${profileId} updated successfully.`);
+        } else {
+            res.send('Profile not found with the given id.');
+        }
+    } catch (error) {
+        console.error(error);
     }
 });
 
 export default router;
-
-
-// import express from 'express';
-// import { nanoid } from 'nanoid';
-// const router = express.Router();
-
-// let profiles = [];
-
-// router.post('/profiles', (req, res, next) => {
-//   const { username, bio, phone, passion, hobby, img } = req.body;
-
-//   if (!username || !bio || !phone || !passion || !hobby || !img) {
-//     res.status(400).send('Required parameter is missing. Please fill all input fields properly.');
-//     return;
-//   }
-
-//   const newProfile = {
-//     id: nanoid(),
-//     username,
-//     bio,
-//     phone,
-//     passion,
-//     hobby,
-//     img,
-//   };
-
-//   profiles.push(newProfile);
-//   res.send('Profile created successfully.');
-// });
-
-// router.get('/profiles', (req, res, next) => {
-//     res.send(profiles);
-//   });
-
-// router.get('/profiles/:profileId', (req, res, next) => {
-//   const profileId = req.params.profileId;
-
-//   const profile = profiles.find((profile) => profile.id === profileId);
-//   if (profile) {
-//     res.send(profile);
-//   } else {
-//     res.status(404).send('Profile not found with id ' + profileId);
-//   }
-// });
-
-// router.delete('/profiles/:profileId', (req, res, next) => {
-//   const profileId = req.params.profileId;
-//   const profileIndex = profiles.findIndex((profile) => profile.id === profileId);
-
-//   if (profileIndex !== -1) {
-//     profiles.splice(profileIndex, 1);
-//     res.send('Profile deleted successfully.');
-//   } else {
-//     res.status(404).send('Profile not found.');
-//   }
-// });
-
-// export default router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
