@@ -125,3 +125,23 @@ row-gap: 2em;
       .body{
         overflow: hidden;
       }
+
+
+      
+      @media only screen and (max-width: 600px) {
+        body {
+          background-color: rgb(230, 173, 215);
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+        }
+        .mainobject{
+            width: 70%;
+           background: url(./backgroundform.jpg);
+        color: #fff;
+        height: 100%;
+       border-radius: 15px;
+        padding: 1em;
+        }
+
+      }
