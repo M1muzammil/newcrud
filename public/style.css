@@ -145,3 +145,19 @@ row-gap: 2em;
         }
 
       }
+      @media only screen and (max-width: 400px) {
+       
+        .mainobject{
+            width: 100%;
+          
+        }
+        .result{
+            margin: 0;
+        padding: 0;
+    width: 100%;}
+        .maindiv{
+            width: 100%;
+        }
+
+
+      }
